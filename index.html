@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Programación I | Final | Makarova, Marina | Morales, Ana</title>
+
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/script.js" defer></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <div id="banner-popup-contenedor"></div>
+
+  <div class="web">
+
+
+    <header>
+      <h1>Programación I | Final | Makarova, Marina | Morales, Ana</h1>
+    </header>
+
+
+    <main>
+
+
+      <section id="hero">
+        <div class="hero-text">
+          <h2>ALUNA</h2>
+          <p>Descubrí piezas únicas de alta joyería, pensadas para acompañar tus momentos más importantes.</p>
+        </div>
+
+        <div class="hero-image">
+          <img src="img/hero.png" alt="Manos con joyas elegantes">
+        </div>
+      </section>
+
+
+      <nav id="categorias"></nav>
+
+      <section id="contenido">
+
+        <h2 class="titulo">Catálogo de productos</h2>
+
+        <aside id="mini-carrito">
+          <p class="mini-carrito-resumen">
+            <span id="mini-cantidad">0</span> ítems agregados
+          </p>
+
+          <p class="mini-carrito-resumen">
+            $<span id="mini-total">0</span> es el total
+          </p>
+
+          <button id="btn-ver-carrito" class="btn-primario">Ver carrito</button>
+        </aside>
+
+        <ul id="productos"></ul>
+      </section>
+
+    </main>
+
+
+    <footer>
+      <ul>
+        <li><strong>Profesor:</strong> Cristian Ariel Corbalán</li>
+        <li>
+          <a href="mailto:cristian.corbalan@davinci.edu.ar" target="_blank">cristian.corbalan@davinci.edu.ar</a>
+        </li>
+        <li>Programación I - Escuela Da Vinci</li>
+      </ul>
+    </footer>
+
+  </div>
+
+
+  <dialog id="modal-detalle" class="modal">
+    <div id="modal-detalle-contenido"></div>
+  </dialog>
+
+
+  <dialog id="modal-carrito" class="modal">
+    <div id="modal-carrito-contenido"></div>
+  </dialog>
+
+
+  <dialog id="modal-checkout" class="modal">
+    <form id="form-checkout">
+      <h2>Finalizar compra</h2>
+
+      <label>
+        Nombre:
+        <input type="text" required>
+      </label>
+
+      <label>
+        Email:
+        <input type="email" required>
+      </label>
+
+      <button class="btn-primario" type="submit">Confirmar compra</button>
+    </form>
+  </dialog>
+
+</body>
+
+</html>
