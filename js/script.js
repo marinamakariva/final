@@ -233,6 +233,91 @@ function MostrarCatalogo(productosRecorrer = productos) {
   });
 }
 
+function abrirModalDetalle(producto) {
+  const modal = document.createElement("dialog");
+  modal.classList.add("modal");
+
+  const detalle = document.createElement("div");
+  detalle.classList.add("detalle", "producto-info");
+
+  const btnCerrar = document.createElement("button");
+  btnCerrar.type = "button";
+  btnCerrar.classList.add("modal-close");
+  btnCerrar.innerHTML = "&times;";     
+  btnCerrar.addEventListener("click", () => modal.close());
+
+  const galeria = document.createElement("div");
+  galeria.classList.add("galeria-detalle");
+
+  const imgPrincipal = document.createElement("img");
+  imgPrincipal.src = RUTA_IMG_PRODUCTOS + producto.imagenes[0];
+  imgPrincipal.alt = producto.nombre;
+  imgPrincipal.classList.add("galeria-principal");
+
+  const miniaturas = document.createElement("div");
+  miniaturas.classList.add("galeria-miniaturas");
+
+  producto.imagenes.slice(1).forEach(src => {
+    const thumb = document.createElement("img");
+    thumb.src = RUTA_IMG_PRODUCTOS + src;
+    thumb.alt = producto.nombre;
+    thumb.classList.add("galeria-thumb");
+
+    thumb.addEventListener("click", () => {
+      imgPrincipal.src = RUTA_IMG_PRODUCTOS + src;
+    });
+
+    miniaturas.append(thumb);
+  });
+
+  galeria.append(miniaturas, imgPrincipal);
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = producto.nombre;
+  titulo.classList.add("producto-nombre");
+
+  const descripcion = document.createElement("p");
+  descripcion.textContent = producto.descripcionLarga || producto.descripcion;
+  descripcion.classList.add("producto-descripcion");
+
+  const precio = document.createElement("p");
+  precio.textContent = `$${producto.precio}`;
+  precio.classList.add("producto-precio");
+
+  const categoria = document.createElement("p");
+  categoria.textContent = producto.categoria;
+  categoria.classList.add("producto-categoria");
+
+  const footer = document.createElement("footer");
+
+  const btnAgregar = document.createElement("button");
+  btnAgregar.textContent = "Agregar";
+  btnAgregar.addEventListener("click", () => {
+    carrito.agregar(producto);     
+    actualizarMiniCarrito();
+    modal.close();
+  });
+
+  footer.append(btnAgregar);
+
+  detalle.append(
+    btnCerrar,  
+    galeria,
+    titulo,
+    descripcion,
+    precio,
+    categoria,
+    footer
+  );
+
+  modal.append(detalle);
+  document.body.append(modal);
+  modal.showModal();
+
+  modal.addEventListener("close", () => modal.remove());
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   MostrarCatalogo();
   actualizarMiniCarrito();
