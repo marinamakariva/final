@@ -180,3 +180,63 @@ class CarritoDeCompras {
 
 const carrito = new CarritoDeCompras();
 
+function MostrarCatalogo(productosRecorrer = productos) {
+   const contenedor = document.getElementById("productos");
+   contenedor.innerHTML = "";
+
+    productosRecorrer.forEach(producto => {
+    const li = document.createElement("li");
+
+    const img = document.createElement("img");
+    img.src = RUTA_IMG_PRODUCTOS + producto.imagenes[0];
+    img.alt = producto.nombre;
+
+    const div = document.createElement("div");
+    div.classList.add("producto-info");
+
+    const h2 = document.createElement("h3");
+    h2.textContent = producto.nombre;
+    h2.classList.add("producto-nombre");
+
+
+    const descripcion = document.createElement("p");
+    descripcion.textContent = producto.descripcion;
+    descripcion.classList.add("producto-descripcion");
+
+    const precio = document.createElement("p");
+    precio.textContent = `$${producto.precio}`;
+    precio.classList.add("producto-precio");
+
+    const categoria = document.createElement("p");
+    categoria.textContent = producto.categoria;
+    categoria.classList.add("producto-categoria");
+
+    const footer = document.createElement("footer");
+
+    const btnDetalle = document.createElement("button");
+    btnDetalle.textContent = "Ver detalle";
+    btnDetalle.addEventListener("click", () => abrirModalDetalle(producto));
+
+    const btnAgregar = document.createElement("button");
+    btnAgregar.textContent = "Agregar";
+    btnAgregar.addEventListener("click", () => {
+      carrito.agregar(producto);
+      actualizarMiniCarrito();
+    });
+
+    footer.append(btnDetalle, btnAgregar);
+    div.append(h2, descripcion, precio, categoria, footer);
+
+
+    li.append(img, div);
+    contenedor.append(li);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  MostrarCatalogo();
+  actualizarMiniCarrito();
+
+  const btnVerCarrito = document.querySelector("#mini-carrito button");
+  btnVerCarrito.addEventListener("click", abrirModalCarrito);
+});
