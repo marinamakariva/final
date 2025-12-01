@@ -237,42 +237,55 @@ function abrirModalDetalle(producto) {
   const modal = document.createElement("dialog");
   modal.classList.add("modal");
 
-  const detalle = document.createElement("div");
-  detalle.classList.add("detalle", "producto-info");
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.classList.add("modal-close");
+  closeBtn.innerHTML = "&times;";
+  closeBtn.addEventListener("click", () => modal.close());
 
-  const btnCerrar = document.createElement("button");
-  btnCerrar.type = "button";
-  btnCerrar.classList.add("modal-close");
-  btnCerrar.innerHTML = "&times;";     
-  btnCerrar.addEventListener("click", () => modal.close());
+  const contenido = document.createElement("div");
+  contenido.classList.add("detalle-layout");
 
-  const galeria = document.createElement("div");
-  galeria.classList.add("galeria-detalle");
+  const media = document.createElement("div");
+  media.classList.add("detalle-media");
 
   const imgPrincipal = document.createElement("img");
   imgPrincipal.src = RUTA_IMG_PRODUCTOS + producto.imagenes[0];
   imgPrincipal.alt = producto.nombre;
-  imgPrincipal.classList.add("galeria-principal");
+  imgPrincipal.classList.add("detalle-img-principal");
 
-  const miniaturas = document.createElement("div");
-  miniaturas.classList.add("galeria-miniaturas");
+  const thumbs = document.createElement("div");
+  thumbs.classList.add("detalle-thumbs");
 
-  producto.imagenes.slice(1).forEach(src => {
-    const thumb = document.createElement("img");
-    thumb.src = RUTA_IMG_PRODUCTOS + src;
-    thumb.alt = producto.nombre;
-    thumb.classList.add("galeria-thumb");
+producto.imagenes.forEach((src, index) => {
+  const thumb = document.createElement("img");
+  thumb.src = RUTA_IMG_PRODUCTOS + src;
+  thumb.alt = producto.nombre;
+  thumb.classList.add("detalle-thumb");
 
-    thumb.addEventListener("click", () => {
-      imgPrincipal.src = RUTA_IMG_PRODUCTOS + src;
-    });
+  if (index === 0) {
+    thumb.classList.add("detalle-thumb--activa");
+  }
 
-    miniaturas.append(thumb);
+  thumb.addEventListener("click", () => {
+    imgPrincipal.src = RUTA_IMG_PRODUCTOS + src;
+
+    document
+      .querySelectorAll(".detalle-thumb")
+      .forEach(t => t.classList.remove("detalle-thumb--activa"));
+
+    thumb.classList.add("detalle-thumb--activa");
   });
 
-  galeria.append(miniaturas, imgPrincipal);
+  thumbs.append(thumb);
+});
 
-  const titulo = document.createElement("h3");
+  media.append(thumbs, imgPrincipal);
+
+  const info = document.createElement("div");
+  info.classList.add("detalle-info");
+
+  const titulo = document.createElement("h2");
   titulo.textContent = producto.nombre;
   titulo.classList.add("producto-nombre");
 
@@ -288,29 +301,21 @@ function abrirModalDetalle(producto) {
   categoria.textContent = producto.categoria;
   categoria.classList.add("producto-categoria");
 
-  const footer = document.createElement("footer");
-
   const btnAgregar = document.createElement("button");
+  btnAgregar.type = "button";
   btnAgregar.textContent = "Agregar";
+  btnAgregar.classList.add("btn-primario");
   btnAgregar.addEventListener("click", () => {
-    carrito.agregar(producto);     
+    carrito.agregar(producto);
     actualizarMiniCarrito();
     modal.close();
   });
 
-  footer.append(btnAgregar);
+  info.append(titulo, descripcion, precio, categoria, btnAgregar);
 
-  detalle.append(
-    btnCerrar,  
-    galeria,
-    titulo,
-    descripcion,
-    precio,
-    categoria,
-    footer
-  );
+  contenido.append(media, info);
+  modal.append(closeBtn, contenido);
 
-  modal.append(detalle);
   document.body.append(modal);
   modal.showModal();
 
