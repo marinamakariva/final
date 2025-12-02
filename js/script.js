@@ -1,9 +1,11 @@
 "use strict";
 
+/*  Ruta de las imágenes */
+
 const RUTA_IMG_PRODUCTOS = "img/";
 const RUTA_IMG_BANNERS = "img/";
 
-
+/*  Clase producto */
 class Producto {
   constructor({ id, nombre, descripcion, descripcionLarga, precio, imagenes, categoria }) {
     this.id = id;
@@ -16,7 +18,7 @@ class Producto {
   }
 }
 
-
+/*  Base de datos de los productos*/
 const productosData = [
   {
     id: 1,
@@ -100,8 +102,7 @@ const productosData = [
 
 const productos = productosData.map(p => new Producto(p));
 
-
-
+/*  Banners por categoría*/
 const bannersPorCategoria = {
   anillos: [{ imagen: "banner-anillos.webp" }],
   collares: [{ imagen: "banner-collares.webp" }],
@@ -110,7 +111,7 @@ const bannersPorCategoria = {
   relojes: [{ imagen: "banner-relojes.webp" }],
 };
 
-
+/*  Carrito de compras*/
 class ItemCarrito {
   constructor(producto, cantidad = 1) {
     this.producto = producto;
@@ -180,6 +181,8 @@ class CarritoDeCompras {
 
 const carrito = new CarritoDeCompras();
 
+/*  FUNCIÓN: MostrarCatalogo() */
+
 function MostrarCatalogo(productosRecorrer = productos) {
    const contenedor = document.getElementById("productos");
    contenedor.innerHTML = "";
@@ -232,6 +235,8 @@ function MostrarCatalogo(productosRecorrer = productos) {
     contenedor.append(li);
   });
 }
+
+/*   FUNCIÓN: abrirModalDetalle() */
 
 function abrirModalDetalle(producto) {
   const modal = document.createElement("dialog");
@@ -329,4 +334,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btnVerCarrito = document.querySelector("#mini-carrito button");
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
+
 });
