@@ -5,7 +5,7 @@
 const RUTA_IMG_PRODUCTOS = "img/";
 const RUTA_IMG_BANNERS = "img/";
 
-/*  Clase producto */
+/* --- Clase producto ---empieza---*/
 class Producto {
   constructor({ id, nombre, descripcion, descripcionLarga, precio, imagenes, categoria }) {
     this.id = id;
@@ -17,8 +17,10 @@ class Producto {
     this.categoria = categoria;
   }
 }
+/* --- Clase producto ---termina---*/
 
-/*  Base de datos de los productos*/
+
+/* --- Base de datos de los productos---empieza---*/
 const productosData = [
   {
     id: 1,
@@ -102,7 +104,10 @@ const productosData = [
 
 const productos = productosData.map(p => new Producto(p));
 
-/*  Banners por categoría*/
+/* --- Base de datos de los productos---termina---*/
+
+
+/*--- Banners por categoría---empieza---*/
 const bannersPorCategoria = {
   anillos: [{ imagen: "banner-anillos.webp" }],
   collares: [{ imagen: "banner-collares.webp" }],
@@ -110,8 +115,9 @@ const bannersPorCategoria = {
   pulseras: [{ imagen: "banner-pulseras.webp" }],
   relojes: [{ imagen: "banner-relojes.webp" }],
 };
+/*--- Banners por categoría---termina---*/
 
-/*  Carrito de compras*/
+/*---  Carrito de compras---empieza---*/
 class ItemCarrito {
   constructor(producto, cantidad = 1) {
     this.producto = producto;
@@ -180,6 +186,7 @@ class CarritoDeCompras {
 }
 
 const carrito = new CarritoDeCompras();
+/*---  Carrito de compras---termina---*/
 
 /* --- FUNCIÓN: actualizarMiniCarrito() ---empieza---*/
 function actualizarMiniCarrito() {
@@ -193,7 +200,7 @@ function actualizarMiniCarrito() {
 }
 /* --- FUNCIÓN: actualizarMiniCarrito() ---termina---*/
 
-/*  FUNCIÓN: MostrarCatalogo() */
+/* --- FUNCIÓN: MostrarCatalogo() ---empieza--- */
 
 function MostrarCatalogo(productosRecorrer = productos) {
   const contenedor = document.getElementById("productos");
@@ -249,8 +256,9 @@ function MostrarCatalogo(productosRecorrer = productos) {
     contenedor.append(li);
   });
 }
+/* --- FUNCIÓN: MostrarCatalogo() ---termina---*/
 
-/*   FUNCIÓN: generarFiltrosCategorias() */
+/*  --- FUNCIÓN: generarFiltrosCategorias()---empieza--- */
 
 function generarFiltrosCategorias() {
   const cont = document.getElementById("categorias");
@@ -278,8 +286,9 @@ function generarFiltrosCategorias() {
     cont.append(btn);
   });
 }
+/*  --- FUNCIÓN: generarFiltrosCategorias()---termina--- */
 
-/*   FUNCIÓN: mostrarBannerOferta() */
+/*  ---FUNCIÓN: mostrarBannerOferta()---empieza--- */
 
 function mostrarBannerOferta(categoria) {
   const viejo = document.querySelector("dialog.banner-dialog");
@@ -327,8 +336,9 @@ function mostrarBannerOferta(categoria) {
 
   dlg.addEventListener("close", () => dlg.remove());
 }
+/*  ---FUNCIÓN: mostrarBannerOferta()---termina--- */
 
-/*   FUNCIÓN: abrirModalDetalle() */
+/* ---  FUNCIÓN: abrirModalDetalle() ---empieza---*/
 
 function abrirModalDetalle(producto) {
   const modal = document.createElement("dialog");
@@ -418,8 +428,260 @@ function abrirModalDetalle(producto) {
 
   modal.addEventListener("close", () => modal.remove());
 }
+/* ---  FUNCIÓN: abrirModalDetalle() ---termina---*/
 
-/* Inicialización de la aplicación  */
+/* ---  FUNCIÓN: abrirModalCarrito() ---empieza---*/
+function abrirModalCarrito() {
+  const modal = document.createElement("dialog");
+  modal.classList.add("modal");
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.classList.add("modal-close");
+  closeBtn.innerHTML = "&times;";
+  closeBtn.addEventListener("click", () => modal.close());
+
+  const contenedor = document.createElement("div");
+  contenedor.classList.add("detalle-layout"); 
+  
+  const contenido = document.createElement("div");
+  contenido.classList.add("detalle-info");
+
+  const titulo = document.createElement("h2");
+  titulo.textContent = "Tu carrito";
+
+  contenido.append(titulo);
+
+  if (carrito.items.length === 0) {
+    
+    const mensajeVacio = document.createElement("p");
+    mensajeVacio.textContent = "Tu carrito está vacío. Agregá productos para comenzar tu compra.";
+    contenido.append(mensajeVacio);
+  } else {
+    
+    const lista = document.createElement("ul");
+
+    carrito.items.forEach(item => {
+      const li = document.createElement("li");
+
+      const nombre = document.createElement("p");
+      nombre.textContent = item.producto.nombre;
+
+      const cantidad = document.createElement("p");
+      cantidad.textContent = `Cantidad: ${item.cantidad}`;
+
+      const subtotal = document.createElement("p");
+      subtotal.textContent = `Subtotal: $${item.producto.precio * item.cantidad}`;
+
+     
+      const accionesItem = document.createElement("div");
+
+      const btnRestar = document.createElement("button");
+      btnRestar.type = "button";
+      btnRestar.classList.add("btn-secundario");
+      btnRestar.textContent = "-";
+      btnRestar.addEventListener("click", () => {
+        carrito.eliminarUnidad(item.producto.id);
+        modal.close();
+        abrirModalCarrito();
+      });
+
+      const btnSumar = document.createElement("button");
+      btnSumar.type = "button";
+      btnSumar.classList.add("btn-secundario");
+      btnSumar.textContent = "+";
+      btnSumar.addEventListener("click", () => {
+        carrito.agregar(item.producto);
+        modal.close();
+        abrirModalCarrito();
+      });
+
+      const btnQuitar = document.createElement("button");
+      btnQuitar.type = "button";
+      btnQuitar.classList.add("btn-secundario");
+      btnQuitar.textContent = "Quitar producto";
+      btnQuitar.addEventListener("click", () => {
+        carrito.quitarProducto(item.producto.id);
+        modal.close();
+        abrirModalCarrito();
+      });
+
+      accionesItem.append(btnRestar, btnSumar, btnQuitar);
+      li.append(nombre, cantidad, subtotal, accionesItem);
+      lista.append(li);
+    });
+
+    contenido.append(lista);
+
+   
+    const total = document.createElement("p");
+    total.classList.add("carrito-total");
+    total.textContent = `Total: $${carrito.total()}`;
+    contenido.append(total);
+
+  
+    const accionesCarrito = document.createElement("div");
+    accionesCarrito.classList.add("acciones-carrito");
+
+    const btnVaciar = document.createElement("button");
+    btnVaciar.type = "button";
+    btnVaciar.classList.add("btn-secundario");
+    btnVaciar.textContent = "Vaciar carrito";
+    btnVaciar.addEventListener("click", () => {
+      carrito.vaciar();
+      modal.close();
+      abrirModalCarrito();
+    });
+
+    const btnCheckout = document.createElement("button");
+    btnCheckout.type = "button";
+    btnCheckout.classList.add("btn-primario");
+    btnCheckout.textContent = "Finalizar compra";
+    btnCheckout.addEventListener("click", () => {
+      modal.close();
+      abrirModalCheckout();
+    });
+
+   
+    accionesCarrito.append(btnVaciar, btnCheckout);
+    contenido.append(accionesCarrito);
+  }
+
+  contenedor.append(contenido);
+  modal.append(closeBtn, contenedor);
+
+  document.body.prepend(modal);
+  modal.showModal();
+
+  modal.addEventListener("close", () => modal.remove());
+}
+
+/* ---  FUNCIÓN: abrirModalCarrito() ---termina---*/
+
+/* ---  FUNCIÓN: abrirModalCheckout() ---empieza---*/
+function abrirModalCheckout() {
+  
+  const modal = document.createElement("dialog");
+  modal.id = "modal-checkout";
+  modal.classList.add("modal");
+
+  
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.classList.add("modal-close");
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.innerHTML = "&times;";
+  closeBtn.addEventListener("click", () => modal.close());
+
+  
+  const contenido = document.createElement("div");
+  contenido.id = "modal-detalle-contenido";
+
+  
+  const form = document.createElement("form");
+  form.id = "form-checkout";
+  form.addEventListener("submit", manejarSubmitCheckout);
+
+  
+  const titulo = document.createElement("h2");
+  titulo.textContent = "Finalizar compra";
+  form.appendChild(titulo);
+
+  
+  const campos = [
+    { id: "chk-nombre", label: "Nombre:", type: "text", required: true },
+    { id: "chk-telefono", label: "Teléfono:", type: "tel", required: true },
+    { id: "chk-email", label: "Email:", type: "email", required: true },
+    { id: "chk-lugar", label: "Lugar de entrega:", type: "text", required: true },
+    { id: "chk-fecha", label: "Fecha de entrega:", type: "date", required: true }
+  ];
+
+  campos.forEach(campo => {
+    const label = document.createElement("label");
+    label.setAttribute("for", campo.id);
+    label.textContent = campo.label;
+
+    const input = document.createElement("input");
+    input.id = campo.id;
+    input.type = campo.type;
+    if (campo.required) input.required = true;
+
+    form.append(label, input);
+  });
+
+  
+  const labelMetodo = document.createElement("label");
+  labelMetodo.setAttribute("for", "chk-metodo");
+  labelMetodo.textContent = "Método de pago:";
+
+  const selectMetodo = document.createElement("select");
+  selectMetodo.id = "chk-metodo";
+  selectMetodo.required = true;
+
+  const opcionesMetodo = [
+    { value: "", text: "Seleccionar..." },
+    { value: "tarjeta", text: "Tarjeta de crédito" },
+    { value: "debito", text: "Tarjeta de débito" },
+    { value: "transferencia", text: "Transferencia" }
+  ];
+
+  opcionesMetodo.forEach(op => {
+    const opt = document.createElement("option");
+    opt.value = op.value;
+    opt.textContent = op.text;
+    selectMetodo.appendChild(opt);
+  });
+
+  form.append(labelMetodo, selectMetodo);
+
+ 
+  const labelCuotas = document.createElement("label");
+  labelCuotas.setAttribute("for", "chk-cuotas");
+  labelCuotas.textContent = "Cuotas:";
+
+  const selectCuotas = document.createElement("select");
+  selectCuotas.id = "chk-cuotas";
+
+  const opcionesCuotas = ["1", "3", "6"];
+  opcionesCuotas.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = `${c} cuota${c !== "1" ? "s" : ""}`;
+    selectCuotas.appendChild(opt);
+  });
+
+  form.append(labelCuotas, selectCuotas);
+
+ 
+  const acciones = document.createElement("div");
+  acciones.classList.add("modal-carrito-actions");
+
+  const btnCancelar = document.createElement("button");
+  btnCancelar.type = "button";
+  btnCancelar.classList.add("btn-secundario");
+  btnCancelar.textContent = "Seguir comprando";
+  btnCancelar.addEventListener("click", () => modal.close());
+
+  const btnConfirmar = document.createElement("button");
+  btnConfirmar.type = "submit";
+  btnConfirmar.classList.add("btn-primario");
+  btnConfirmar.textContent = "Confirmar compra";
+
+  acciones.append(btnCancelar, btnConfirmar);
+  form.append(acciones);
+  contenido.append(form);
+  modal.append(closeBtn, contenido);
+  document.body.append(modal);
+  modal.showModal();
+
+  
+  modal.addEventListener("close", () => modal.remove());
+}
+
+/* ---  FUNCIÓN: abrirModalCheckout() ---termina---*/
+
+
+/*--- Inicialización de la aplicación  ---empieza---*/
 document.addEventListener("DOMContentLoaded", () => {
   generarFiltrosCategorias();
   MostrarCatalogo();
@@ -429,3 +691,5 @@ document.addEventListener("DOMContentLoaded", () => {
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
 
 });
+
+/*--- Inicialización de la aplicación  ---termina---*/
