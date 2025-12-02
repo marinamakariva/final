@@ -96,6 +96,10 @@ button {
   transition: filter 0.2s ease, transform 0.1s ease;
 }
 
+.btn-primario:hover {
+  background: #347e8f;
+}
+
 button:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
@@ -179,9 +183,8 @@ button:focus {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1.5rem 1rem 0.5rem;
+  padding: 0 1rem 1.5rem;
 }
-
 
 #mini-carrito {
   display: flex;

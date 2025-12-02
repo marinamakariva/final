@@ -233,6 +233,33 @@ function MostrarCatalogo(productosRecorrer = productos) {
   });
 }
 
+function generarFiltrosCategorias() {
+  const cont = document.getElementById("categorias");
+  cont.innerHTML = "";
+
+  const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
+
+  const btnTodos = document.createElement("button");
+  btnTodos.textContent = "Todos";
+  btnTodos.classList.add("btn-primario");
+  btnTodos.addEventListener("click", () => MostrarCatalogo(productos));
+  cont.append(btnTodos);
+
+  categoriasUnicas.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.textContent = cat;
+    btn.classList.add("btn-primario");
+
+    btn.addEventListener("click", () => {
+      const filtrados = productos.filter(p => p.categoria === cat);
+      MostrarCatalogo(filtrados); 
+    });
+
+    cont.append(btn);
+  });
+}
+
+
 function abrirModalDetalle(producto) {
   const modal = document.createElement("dialog");
   modal.classList.add("modal");
@@ -324,9 +351,7 @@ producto.imagenes.forEach((src, index) => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  MostrarCatalogo();
+  generarFiltrosCategorias();    
+  MostrarCatalogo();             
   actualizarMiniCarrito();
-
-  const btnVerCarrito = document.querySelector("#mini-carrito button");
-  btnVerCarrito.addEventListener("click", abrirModalCarrito);
 });
