@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+/* --- Estilo Base empieza --- */
 *,
 *::before,
 *::after {
@@ -23,7 +24,9 @@ img {
   max-width: 100%;
   display: block;
 }
+/* --- Estilo Base termina --- */
 
+/* --- Estilos Estructura general empieza--- */
 
 .web {
   display: grid;
@@ -66,7 +69,9 @@ img {
   color: #011f26;
   text-decoration: none;
 }
+/* --- Estilos Estructura general termina--- */
 
+/* --- Estilo contenido empieza---*/
 #contenido {
   padding: 0 1rem 2rem;
 }
@@ -80,20 +85,33 @@ img {
   font-weight: bold;
 }
 
+/* --- Estilo contenido termina---*/
+
+/* ---Botones empieza---*/
 button {
   font-family: inherit;
   border: none;
   cursor: pointer;
 }
 
-.btn-primario {
+.btn-primario,
+.btn-secundario {
   padding: 0.5rem 1.1rem;
   border-radius: 999px;
+  border: none;
   font-weight: bold;
   font-size: 0.9rem;
+  transition: filter 0.2s ease, transform 0.1s ease, background-color 0.2s ease;
+}
+
+.btn-primario {
   background: #025e73;
   color: #ffffff;
-  transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+.btn-secundario {
+  background: #eeeeee;
+  color: #011f26;
 }
 
 button:hover {
@@ -104,6 +122,10 @@ button:hover {
 button:focus {
   outline: none;
 }
+
+/* ---Botones termina---*/
+
+/* ---Estilos Sección Hero empieza---*/
 
 #hero {
   display: flex;
@@ -173,7 +195,9 @@ button:focus {
   animation: fadeInImage 1.5s ease forwards;
   animation-delay: 0.5s;
 }
+/* ---Estilos Sección Hero termina---*/
 
+/* ---Estilos Categoría empieza---*/
 #categorias {
   display: flex;
   flex-wrap: wrap;
@@ -181,7 +205,9 @@ button:focus {
   gap: 0.5rem;
   padding: 1.5rem 1rem 0.5rem;
 }
+/* ---Estilos Categoría termina---*/
 
+/* ---Estilo Mini Carrito empieza---*/
 
 #mini-carrito {
   display: flex;
@@ -198,7 +224,9 @@ button:focus {
   color: #025e73;
   font-size: 0.95rem;
 }
+/* ---Estilo Mini Carrito termina---*/
 
+/* ---Estilos Lista de Producto empieza---*/
 #productos {
   display: grid;
   grid-template-columns: 100%;
@@ -226,6 +254,9 @@ button:focus {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
+/* ---Estilos Lista de Producto termina---*/
+
+/* ---Estilos Modal General empieza---*/
 .modal {
   border: 1px solid #aeaeae;
   border-radius: 10px;
@@ -264,6 +295,9 @@ button:focus {
   line-height: 1.4;
 }
 
+/* ---Estilos Modal General termina---*/
+
+/* ---Estilos Banner empieza---*/
 #banner-popup-contenedor {
   display: none;
   position: fixed;
@@ -272,6 +306,7 @@ button:focus {
   align-items: center;
   z-index: 9999;
 }
+/* ---Estilos Banner termina---*/
 
 /* --- ModalDetalle empieza --- */
 
@@ -359,6 +394,8 @@ button:focus {
 
 /* --- ModalDetalle termina --- */
 
+
+/* --- Media Queries Empieza --- */
 @media (min-width: 576px) {
   .web > footer ul {
     flex-direction: row;
@@ -397,4 +434,7 @@ button:focus {
     width: 100%;
     height: auto;
   }
+
 }
+
+/* --- Media Queries Termina --- */
