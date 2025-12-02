@@ -248,14 +248,14 @@ function generarFiltrosCategorias() {
 
   const btnTodos = document.createElement("button");
   btnTodos.textContent = "Todos";
-  btnTodos.classList.add("btn-primario");
+  btnTodos.classList.add("btn-secundario");
   btnTodos.addEventListener("click", () => MostrarCatalogo(productos));
   cont.append(btnTodos);
 
   categoriasUnicas.forEach(cat => {
     const btn = document.createElement("button");
     btn.textContent = cat;
-    btn.classList.add("btn-primario");
+    btn.classList.add("btn-secundario");
 
     btn.addEventListener("click", () => {
       const filtrados = productos.filter(p => p.categoria === cat);
