@@ -27,10 +27,10 @@ const productosData = [
     descripcionLarga: "Inspirado en la elegancia hipnótica de la serpiente, elaborado en oro blanco de 18 quilates.",
     precio: 800000,
     imagenes: [
-    "producto-SerpentiViperAnillo.webp",
-    "producto-SerpentiViperAnillo02.webp",
-    "producto-SerpentiViperAnillo03.webp"
-  ],
+      "producto-SerpentiViperAnillo.webp",
+      "producto-SerpentiViperAnillo02.webp",
+      "producto-SerpentiViperAnillo03.webp"
+    ],
     categoria: "anillos",
   },
   {
@@ -40,9 +40,9 @@ const productosData = [
     descripcionLarga: "Obra maestra del diseño contemporáneo, armonía entre innovación y tradición.",
     precio: 900000,
     imagenes: [
-    "producto-B.zero1Collar.webp",
-    "producto-B.zero1Collar02.webp",
-    "producto-B.zero1Collar03.webp"
+      "producto-B.zero1Collar.webp",
+      "producto-B.zero1Collar02.webp",
+      "producto-B.zero1Collar03.webp"
     ],
     categoria: "collares",
   },
@@ -53,10 +53,10 @@ const productosData = [
     descripcionLarga: "Forma fluida y brillante fabricada en oro blanco de 18 quilates.",
     precio: 505000,
     imagenes: [
-    "producto-SerpentiViperPendientes.webp",
-    "producto-SerpentiViperPendientes02.webp",
-    "producto-SerpentiViperPendientes03.webp"
-  ],
+      "producto-SerpentiViperPendientes.webp",
+      "producto-SerpentiViperPendientes02.webp",
+      "producto-SerpentiViperPendientes03.webp"
+    ],
     categoria: "aros",
   },
   {
@@ -66,10 +66,10 @@ const productosData = [
     descripcionLarga: "Fusión de sensualidad y precisión en oro amarillo de 18 quilates.",
     precio: 980000,
     imagenes: [
-    "producto-SerpentiViperPulsera.webp",
-    "producto-SerpentiViperPulsera02.webp",
-    "producto-SerpentiViperPulsera03.webp"
-  ],
+      "producto-SerpentiViperPulsera.webp",
+      "producto-SerpentiViperPulsera02.webp",
+      "producto-SerpentiViperPulsera03.webp"
+    ],
     categoria: "pulseras",
   },
   {
@@ -79,10 +79,10 @@ const productosData = [
     descripcionLarga: "Joyería clásica con micromovimiento de precisión.",
     precio: 12200000,
     imagenes: [
-    "producto-RelojMonete.webp",
-    "producto-RelojMonete02.webp",
-    "producto-RelojMonete03.webp"
-  ],
+      "producto-RelojMonete.webp",
+      "producto-RelojMonete02.webp",
+      "producto-RelojMonete03.webp"
+    ],
     categoria: "relojes",
   },
   {
@@ -92,9 +92,9 @@ const productosData = [
     descripcionLarga: "Captura la esencia de la feminidad italiana inspirada en mosaicos clásicos.",
     precio: 1500000,
     imagenes: [
-    "producto-DivasDreamAnillo.webp",
-    "producto-DivasDreamAnillo02.webp",
-    "producto-DivasDreamAnillo03.webp"
+      "producto-DivasDreamAnillo.webp",
+      "producto-DivasDreamAnillo02.webp",
+      "producto-DivasDreamAnillo03.webp"
     ],
     categoria: "anillos",
   },
@@ -184,10 +184,10 @@ const carrito = new CarritoDeCompras();
 /*  FUNCIÓN: MostrarCatalogo() */
 
 function MostrarCatalogo(productosRecorrer = productos) {
-   const contenedor = document.getElementById("productos");
-   contenedor.innerHTML = "";
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
 
-    productosRecorrer.forEach(producto => {
+  productosRecorrer.forEach(producto => {
     const li = document.createElement("li");
 
     const img = document.createElement("img");
@@ -247,23 +247,73 @@ function generarFiltrosCategorias() {
   const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
 
   const btnTodos = document.createElement("button");
-  btnTodos.textContent = "Todos";
+  btnTodos.textContent = "todos";
   btnTodos.classList.add("btn-secundario");
   btnTodos.addEventListener("click", () => MostrarCatalogo(productos));
   cont.append(btnTodos);
 
   categoriasUnicas.forEach(cat => {
     const btn = document.createElement("button");
-    btn.textContent = cat;
     btn.classList.add("btn-secundario");
+    btn.textContent = cat;
 
     btn.addEventListener("click", () => {
       const filtrados = productos.filter(p => p.categoria === cat);
-      MostrarCatalogo(filtrados); 
+      MostrarCatalogo(filtrados);
+      mostrarBannerOferta(cat); 
     });
 
     cont.append(btn);
   });
+}
+
+/*   FUNCIÓN: mostrarBannerOferta() */
+
+function mostrarBannerOferta(categoria) {
+  const viejo = document.querySelector("dialog.banner-dialog");
+  if (viejo) {
+    viejo.close();
+    viejo.remove();
+  }
+
+  let datosBanner = bannersPorCategoria[categoria];
+
+  const rutaBanner = RUTA_IMG_BANNERS + datosBanner[0].imagen;
+
+  const dlg = document.createElement("dialog");
+  dlg.classList.add("banner-dialog");
+
+  const img = document.createElement("img");
+  img.src = rutaBanner;
+  img.alt = "Oferta especial";
+  img.classList.add("banner-dialog-img");
+
+  const btnCerrar = document.createElement("button");
+  btnCerrar.type = "button";
+  btnCerrar.classList.add("banner-close");
+  btnCerrar.innerHTML = "&times;";
+
+  dlg.append(img, btnCerrar);
+  document.body.append(dlg);
+  dlg.showModal();
+
+  function cerrarConFade() {
+    dlg.classList.add("fade-out");
+
+    setTimeout(() => {
+      if (dlg.open) dlg.close();
+      dlg.remove();
+    }, 400);
+  }
+
+  const timerId = setTimeout(() => cerrarConFade(), 10000);
+
+  btnCerrar.addEventListener("click", () => {
+    clearTimeout(timerId);
+    cerrarConFade();
+  });
+
+  dlg.addEventListener("close", () => dlg.remove());
 }
 
 /*   FUNCIÓN: abrirModalDetalle() */
@@ -292,28 +342,28 @@ function abrirModalDetalle(producto) {
   const thumbs = document.createElement("div");
   thumbs.classList.add("detalle-thumbs");
 
-producto.imagenes.forEach((src, index) => {
-  const thumb = document.createElement("img");
-  thumb.src = RUTA_IMG_PRODUCTOS + src;
-  thumb.alt = producto.nombre;
-  thumb.classList.add("detalle-thumb");
+  producto.imagenes.forEach((src, index) => {
+    const thumb = document.createElement("img");
+    thumb.src = RUTA_IMG_PRODUCTOS + src;
+    thumb.alt = producto.nombre;
+    thumb.classList.add("detalle-thumb");
 
-  if (index === 0) {
-    thumb.classList.add("detalle-thumb--activa");
-  }
+    if (index === 0) {
+      thumb.classList.add("detalle-thumb--activa");
+    }
 
-  thumb.addEventListener("click", () => {
-    imgPrincipal.src = RUTA_IMG_PRODUCTOS + src;
+    thumb.addEventListener("click", () => {
+      imgPrincipal.src = RUTA_IMG_PRODUCTOS + src;
 
-    document
-      .querySelectorAll(".detalle-thumb")
-      .forEach(t => t.classList.remove("detalle-thumb--activa"));
+      document
+        .querySelectorAll(".detalle-thumb")
+        .forEach(t => t.classList.remove("detalle-thumb--activa"));
 
-    thumb.classList.add("detalle-thumb--activa");
+      thumb.classList.add("detalle-thumb--activa");
+    });
+
+    thumbs.append(thumb);
   });
-
-  thumbs.append(thumb);
-});
 
   media.append(thumbs, imgPrincipal);
 
@@ -359,8 +409,8 @@ producto.imagenes.forEach((src, index) => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  generarFiltrosCategorias();    
-  MostrarCatalogo();             
+  generarFiltrosCategorias();
+  MostrarCatalogo();
   actualizarMiniCarrito();
 
   const btnVerCarrito = document.querySelector("#mini-carrito button");
