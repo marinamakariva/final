@@ -181,6 +181,18 @@ class CarritoDeCompras {
 
 const carrito = new CarritoDeCompras();
 
+/* --- FUNCIÓN: actualizarMiniCarrito() ---empieza---*/
+function actualizarMiniCarrito() {
+  const cantidadSpan = document.getElementById("mini-cantidad");
+  const totalSpan = document.getElementById("mini-total");
+
+  if (!cantidadSpan || !totalSpan) return;
+
+  cantidadSpan.textContent = carrito.cantidadTotal();
+  totalSpan.textContent = carrito.total();
+}
+/* --- FUNCIÓN: actualizarMiniCarrito() ---termina---*/
+
 /*  FUNCIÓN: MostrarCatalogo() */
 
 function MostrarCatalogo(productosRecorrer = productos) {
@@ -407,7 +419,7 @@ function abrirModalDetalle(producto) {
   modal.addEventListener("close", () => modal.remove());
 }
 
-
+/* Inicialización de la aplicación  */
 document.addEventListener("DOMContentLoaded", () => {
   generarFiltrosCategorias();
   MostrarCatalogo();
@@ -415,4 +427,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btnVerCarrito = document.querySelector("#mini-carrito button");
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
+
 });
