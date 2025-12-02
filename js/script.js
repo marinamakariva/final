@@ -681,7 +681,7 @@ function abrirModalCheckout() {
 /* ---  FUNCIÓN: abrirModalCheckout() ---termina---*/
 
 
-/*--- Inicialización de la aplicación  ---empieza---*/
+/*--- Inicialización del DOM ---empieza---*/
 document.addEventListener("DOMContentLoaded", () => {
   generarFiltrosCategorias();
   MostrarCatalogo();
@@ -693,3 +693,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización de la aplicación  ---termina---*/
+
