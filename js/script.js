@@ -218,10 +218,12 @@ function MostrarCatalogo(productosRecorrer = productos) {
 
     const btnDetalle = document.createElement("button");
     btnDetalle.textContent = "Ver detalle";
+    btnDetalle.classList.add("btn-secundario");
     btnDetalle.addEventListener("click", () => abrirModalDetalle(producto));
 
     const btnAgregar = document.createElement("button");
     btnAgregar.textContent = "Agregar";
+    btnAgregar.classList.add("btn-primario");
     btnAgregar.addEventListener("click", () => {
       carrito.agregar(producto);
       actualizarMiniCarrito();
@@ -336,3 +338,4 @@ document.addEventListener("DOMContentLoaded", () => {
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
 
 });
+
