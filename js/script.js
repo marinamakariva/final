@@ -680,6 +680,45 @@ function abrirModalCheckout() {
 
 /* ---  FUNCIÓN: abrirModalCheckout() ---termina---*/
 
+/*--- FUNCIÓN: manejarSubmitCheckout() ---empieza---*/
+
+function manejarSubmitCheckout(evento) {
+  evento.preventDefault();
+
+  const nombreInput = document.getElementById("chk-nombre");
+  const nombreValor = nombreInput ? nombreInput.value.trim() : "";
+
+  carrito.vaciar();
+  actualizarMiniCarrito();
+
+  const dlg = document.getElementById("modal-checkout");
+  if (dlg instanceof HTMLDialogElement) {
+    dlg.close();
+  }
+
+  const mensaje = document.createElement("dialog");
+  mensaje.classList.add("modal");
+
+  const texto = document.createElement("p");
+  texto.textContent = nombreValor
+    ? `¡Gracias por tu compra, ${nombreValor}!`
+    : "¡Gracias por tu compra!";
+
+  const btnCerrar = document.createElement("button");
+  btnCerrar.type = "button";
+  btnCerrar.classList.add("btn-primario");
+  btnCerrar.textContent = "Cerrar";
+  btnCerrar.addEventListener("click", () => mensaje.close());
+
+  mensaje.append(texto, btnCerrar);
+  document.body.prepend(mensaje);
+  mensaje.showModal();
+
+  mensaje.addEventListener("close", () => mensaje.remove());
+}
+
+/*--- FUNCIÓN: manejarSubmitCheckout() ---termina---*/
+
 
 /*--- Inicialización del DOM ---empieza---*/
 document.addEventListener("DOMContentLoaded", () => {
@@ -693,4 +732,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización de la aplicación  ---termina---*/
+
 
