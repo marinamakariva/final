@@ -731,6 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/*--- Inicialización de la aplicación  ---termina---*/
+/*--- Inicialización del DOM  ---termina---*/
+
 
 
