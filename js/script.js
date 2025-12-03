@@ -104,10 +104,10 @@ const productosData = [
 
 const productos = productosData.map(p => new Producto(p));
 
-/* --- Base de datos de los productos---termina---*/
+/* --- Base de datos de los productos--- termina ---*/
 
 
-/*--- Banners por categoría---empieza---*/
+/*--- Banners por categoría ---empieza ---*/
 const bannersPorCategoria = {
   anillos: [{ imagen: "banner-anillos.webp" }],
   collares: [{ imagen: "banner-collares.webp" }],
@@ -115,9 +115,9 @@ const bannersPorCategoria = {
   pulseras: [{ imagen: "banner-pulseras.webp" }],
   relojes: [{ imagen: "banner-relojes.webp" }],
 };
-/*--- Banners por categoría---termina---*/
+/*--- Banners por categoría --- termina ---*/
 
-/*---  Carrito de compras---empieza---*/
+/*---  Carrito de compras--- empieza ---*/
 class ItemCarrito {
   constructor(producto, cantidad = 1) {
     this.producto = producto;
@@ -186,9 +186,9 @@ class CarritoDeCompras {
 }
 
 const carrito = new CarritoDeCompras();
-/*---  Carrito de compras---termina---*/
+/*---  Carrito de compras--- termina ---*/
 
-/* --- FUNCIÓN: actualizarMiniCarrito() ---empieza---*/
+/* --- FUNCIÓN: actualizarMiniCarrito() --- empieza ---*/
 function actualizarMiniCarrito() {
   const cantidadSpan = document.getElementById("mini-cantidad");
   const totalSpan = document.getElementById("mini-total");
@@ -198,9 +198,9 @@ function actualizarMiniCarrito() {
   cantidadSpan.textContent = carrito.cantidadTotal();
   totalSpan.textContent = carrito.total();
 }
-/* --- FUNCIÓN: actualizarMiniCarrito() ---termina---*/
+/* --- FUNCIÓN: actualizarMiniCarrito() --- termina ---*/
 
-/* --- FUNCIÓN: MostrarCatalogo() ---empieza--- */
+/* --- FUNCIÓN: MostrarCatalogo() --- empieza --- */
 
 function MostrarCatalogo(productosRecorrer = productos) {
   const contenedor = document.getElementById("productos");
@@ -256,9 +256,9 @@ function MostrarCatalogo(productosRecorrer = productos) {
     contenedor.append(li);
   });
 }
-/* --- FUNCIÓN: MostrarCatalogo() ---termina---*/
+/* --- FUNCIÓN: MostrarCatalogo() --- termina ---*/
 
-/*  --- FUNCIÓN: generarFiltrosCategorias()---empieza--- */
+/*  --- FUNCIÓN: generarFiltrosCategorias()--- empieza --- */
 
 function generarFiltrosCategorias() {
   const cont = document.getElementById("categorias");
@@ -286,9 +286,9 @@ function generarFiltrosCategorias() {
     cont.append(btn);
   });
 }
-/*  --- FUNCIÓN: generarFiltrosCategorias()---termina--- */
+/*  --- FUNCIÓN: generarFiltrosCategorias()--- termina --- */
 
-/*  ---FUNCIÓN: mostrarBannerOferta()---empieza--- */
+/*  ---FUNCIÓN: mostrarBannerOferta()--- empieza --- */
 
 function mostrarBannerOferta(categoria) {
   const viejo = document.querySelector("dialog.banner-dialog");
@@ -336,9 +336,9 @@ function mostrarBannerOferta(categoria) {
 
   dlg.addEventListener("close", () => dlg.remove());
 }
-/*  ---FUNCIÓN: mostrarBannerOferta()---termina--- */
+/*  ---FUNCIÓN: mostrarBannerOferta()--- termina --- */
 
-/* ---  FUNCIÓN: abrirModalDetalle() ---empieza---*/
+/* ---  FUNCIÓN: abrirModalDetalle() --- empieza ---*/
 
 function abrirModalDetalle(producto) {
   const modal = document.createElement("dialog");
@@ -428,9 +428,9 @@ function abrirModalDetalle(producto) {
 
   modal.addEventListener("close", () => modal.remove());
 }
-/* ---  FUNCIÓN: abrirModalDetalle() ---termina---*/
+/* ---  FUNCIÓN: abrirModalDetalle() --- termina ---*/
 
-/* ---  FUNCIÓN: abrirModalCarrito() ---empieza---*/
+/* ---  FUNCIÓN: abrirModalCarrito() --- empieza ---*/
 function abrirModalCarrito() {
   const modal = document.createElement("dialog");
   modal.classList.add("modal");
@@ -558,7 +558,7 @@ function abrirModalCarrito() {
 
 /* ---  FUNCIÓN: abrirModalCarrito() ---termina---*/
 
-/* ---  FUNCIÓN: abrirModalCheckout() ---empieza---*/
+/* ---  FUNCIÓN: abrirModalCheckout() --- empieza ---*/
 function abrirModalCheckout() {
   
   const modal = document.createElement("dialog");
@@ -678,9 +678,9 @@ function abrirModalCheckout() {
   modal.addEventListener("close", () => modal.remove());
 }
 
-/* ---  FUNCIÓN: abrirModalCheckout() ---termina---*/
+/* ---  FUNCIÓN: abrirModalCheckout() --- termina ---*/
 
-/*--- FUNCIÓN: manejarSubmitCheckout() ---empieza---*/
+/*--- FUNCIÓN: manejarSubmitCheckout() --- empieza ---*/
 
 function manejarSubmitCheckout(evento) {
   evento.preventDefault();
@@ -717,10 +717,10 @@ function manejarSubmitCheckout(evento) {
   mensaje.addEventListener("close", () => mensaje.remove());
 }
 
-/*--- FUNCIÓN: manejarSubmitCheckout() ---termina---*/
+/*--- FUNCIÓN: manejarSubmitCheckout() --- termina ---*/
 
 
-/*--- Inicialización del DOM ---empieza---*/
+/*--- Inicialización del DOM --- empieza ---*/
 document.addEventListener("DOMContentLoaded", () => {
   generarFiltrosCategorias();
   MostrarCatalogo();
@@ -731,7 +731,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/*--- Inicialización del DOM  ---termina---*/
+/*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
