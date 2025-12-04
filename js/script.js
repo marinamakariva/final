@@ -7,7 +7,7 @@ const RUTA_IMG_BANNERS = "img/";
 
 /* --- Clase producto ---empieza---*/
 class Producto {
-  constructor({ id, nombre, descripcion, descripcionLarga, precio, imagenes, categoria }) {
+  constructor({ id, nombre, descripcion, descripcionLarga, precio, imagenes, categoria, enOferta }) {
     this.id = id;
     this.nombre = nombre;
     this.descripcion = descripcion;
@@ -15,6 +15,7 @@ class Producto {
     this.precio = precio;
     this.imagenes = imagenes;
     this.categoria = categoria;
+    this.enOferta = enOferta; 
   }
 }
 /* --- Clase producto ---termina---*/
@@ -34,6 +35,7 @@ const productosData = [
       "producto-SerpentiViperAnillo03.webp"
     ],
     categoria: "ANILLOS",
+    enOferta: true
   },
   {
     id: 2,
@@ -47,6 +49,7 @@ const productosData = [
       "producto-B.zero1Collar03.webp"
     ],
     categoria: "COLLARES",
+    enOferta: true
   },
   {
     id: 3,
@@ -60,6 +63,7 @@ const productosData = [
       "producto-SerpentiViperPendientes03.webp"
     ],
     categoria: "AROS",
+    enOferta: true
   },
   {
     id: 4,
@@ -73,6 +77,7 @@ const productosData = [
       "producto-SerpentiViperPulsera03.webp"
     ],
     categoria: "PULSERAS",
+    enOferta: true
   },
   {
     id: 5,
@@ -86,6 +91,7 @@ const productosData = [
       "producto-RelojMonete03.webp"
     ],
     categoria: "RELOJES",
+    enOferta: true
   },
   {
     id: 6,
@@ -296,7 +302,11 @@ function mostrarBannerOferta(categoria) {
     viejo.remove();
   }
 
-  let datosBanner = bannersPorCategoria[categoria];
+  const datosBanner = bannersPorCategoria[categoria];
+  if (!datosBanner || !datosBanner[0]) return;
+
+  const productoOferta = productos.find(p => p.categoria === categoria && p.enOferta);
+
   const rutaBanner = RUTA_IMG_BANNERS + datosBanner[0].imagen;
 
   const dlg = document.createElement("dialog");
@@ -304,25 +314,33 @@ function mostrarBannerOferta(categoria) {
 
   const img = document.createElement("img");
   img.src = rutaBanner;
-  img.alt = "Oferta especial para " + categoria;
+  img.alt = `Oferta especial en ${categoria}`;
   img.classList.add("banner-dialog-img");
 
   const btnVer = document.createElement("button");
-  btnVer.type = "button";
-  btnVer.classList.add("btn-primario", "banner-btn");
-  btnVer.textContent = `VER ${categoria}`;
-  btnVer.addEventListener("click", () => {
-    const filtrados = productos.filter(p => p.categoria === categoria);
-    MostrarCatalogo(filtrados);
-    dlg.close();
-  });
+  btnVer.classList.add("btn-primario");
+  
+  if (productoOferta) {
+    btnVer.textContent = `Ver oferta: ${productoOferta.nombre}`;
+    btnVer.addEventListener("click", () => {
+      abrirModalDetalle(productoOferta); 
+      dlg.close();
+    });
+  } else {
+
+    btnVer.textContent = `Ver colección de ${categoria}`;
+    btnVer.addEventListener("click", () => {
+      MostrarCatalogo(productos.filter(p => p.categoria === categoria));
+      dlg.close();
+    });
+  }
 
   const btnCerrar = document.createElement("button");
   btnCerrar.type = "button";
   btnCerrar.classList.add("banner-close");
   btnCerrar.innerHTML = "&times;";
 
-  dlg.append(img, btnVer, btnCerrar); 
+  dlg.append(img, btnVer, btnCerrar);
   document.body.append(dlg);
   dlg.showModal();
 
@@ -331,10 +349,10 @@ function mostrarBannerOferta(categoria) {
     setTimeout(() => {
       if (dlg.open) dlg.close();
       dlg.remove();
-    }, 400);
+    }, 350);
   }
 
-  const timerId = setTimeout(() => cerrarConFade(), 10000);
+  const timerId = setTimeout(cerrarConFade, 10000);
 
   btnCerrar.addEventListener("click", () => {
     clearTimeout(timerId);
@@ -343,7 +361,6 @@ function mostrarBannerOferta(categoria) {
 
   dlg.addEventListener("close", () => dlg.remove());
 }
-
 
 /*  ---FUNCIÓN: mostrarBannerOferta()--- termina --- */
 
@@ -740,6 +757,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
