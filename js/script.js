@@ -505,6 +505,7 @@ function abrirModalDetalle(producto) {
 }
 /* ---  FUNCIÓN: abrirModalDetalle() --- termina ---*/
 
+
 /* ---  FUNCIÓN: abrirModalCarrito() --- empieza ---*/
 function abrirModalCarrito() {
   const modal = document.createElement("dialog");
@@ -517,8 +518,8 @@ function abrirModalCarrito() {
   closeBtn.addEventListener("click", () => modal.close());
 
   const contenedor = document.createElement("div");
-  contenedor.classList.add("detalle-layout");
-
+  contenedor.classList.add("detalle-layout"); 
+  
   const contenido = document.createElement("div");
   contenido.classList.add("detalle-info");
 
@@ -528,28 +529,42 @@ function abrirModalCarrito() {
   contenido.append(titulo);
 
   if (carrito.items.length === 0) {
-
+    
     const mensajeVacio = document.createElement("p");
     mensajeVacio.textContent = "Tu carrito está vacío. Agregá productos para comenzar tu compra.";
     contenido.append(mensajeVacio);
   } else {
-
+    
     const lista = document.createElement("ul");
 
     carrito.items.forEach(item => {
       const li = document.createElement("li");
+      li.classList.add("carrito-item"); 
+
+
+      const img = document.createElement("img");
+      img.src = RUTA_IMG_PRODUCTOS + item.producto.imagenes[0];
+      img.alt = item.producto.nombre;
+      img.classList.add("carrito-item-img");
+
+  
+      const infoContainer = document.createElement("div");
+      infoContainer.classList.add("carrito-item-info");
 
       const nombre = document.createElement("p");
       nombre.textContent = item.producto.nombre;
+      nombre.classList.add("carrito-item-nombre");
 
       const cantidad = document.createElement("p");
       cantidad.textContent = `Cantidad: ${item.cantidad}`;
+      cantidad.classList.add("carrito-item-cantidad");
 
       const subtotal = document.createElement("p");
       subtotal.textContent = `Subtotal: $${item.producto.precio * item.cantidad}`;
-
+      subtotal.classList.add("carrito-item-subtotal");
 
       const accionesItem = document.createElement("div");
+      accionesItem.classList.add("carrito-item-actions");
 
       const btnRestar = document.createElement("button");
       btnRestar.type = "button";
@@ -582,19 +597,24 @@ function abrirModalCarrito() {
       });
 
       accionesItem.append(btnRestar, btnSumar, btnQuitar);
-      li.append(nombre, cantidad, subtotal, accionesItem);
+
+
+      infoContainer.append(nombre, cantidad, subtotal, accionesItem);
+
+
+      li.append(img, infoContainer);
       lista.append(li);
     });
 
     contenido.append(lista);
 
-
+   
     const total = document.createElement("p");
     total.classList.add("carrito-total");
     total.textContent = `Total: $${carrito.total()}`;
     contenido.append(total);
 
-
+  
     const accionesCarrito = document.createElement("div");
     accionesCarrito.classList.add("acciones-carrito");
 
@@ -617,7 +637,7 @@ function abrirModalCarrito() {
       abrirModalCheckout();
     });
 
-
+   
     accionesCarrito.append(btnVaciar, btnCheckout);
     contenido.append(accionesCarrito);
   }
@@ -805,5 +825,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnVerCarrito = document.querySelector("#mini-carrito button");
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
 });
+
 
 /*--- Inicialización del DOM  --- termina ---*/
