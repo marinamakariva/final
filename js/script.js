@@ -601,7 +601,7 @@ function abrirModalCheckout() {
   
   const titulo = document.createElement("h2");
   titulo.textContent = "Finalizar compra";
-  form.appendChild(titulo);
+  form.append(titulo);
 
   
   const campos = [
@@ -645,7 +645,7 @@ function abrirModalCheckout() {
     const opt = document.createElement("option");
     opt.value = op.value;
     opt.textContent = op.text;
-    selectMetodo.appendChild(opt);
+    selectMetodo.append(opt);
   });
 
   form.append(labelMetodo, selectMetodo);
@@ -663,7 +663,7 @@ function abrirModalCheckout() {
     const opt = document.createElement("option");
     opt.value = c;
     opt.textContent = `${c} cuota${c !== "1" ? "s" : ""}`;
-    selectCuotas.appendChild(opt);
+    selectCuotas.append(opt);
   });
 
   form.append(labelCuotas, selectCuotas);
@@ -748,6 +748,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
