@@ -566,7 +566,7 @@ function abrirModalCarrito() {
   contenedor.append(contenido);
   modal.append(closeBtn, contenedor);
 
-  document.body.prepend(modal);
+  document.body.append(modal);
   modal.showModal();
 
   modal.addEventListener("close", () => modal.remove());
@@ -727,7 +727,7 @@ function manejarSubmitCheckout(evento) {
   btnCerrar.addEventListener("click", () => mensaje.close());
 
   mensaje.append(texto, btnCerrar);
-  document.body.prepend(mensaje);
+  document.body.append(mensaje);
   mensaje.showModal();
 
   mensaje.addEventListener("close", () => mensaje.remove());
@@ -748,6 +748,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
