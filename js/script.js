@@ -289,7 +289,6 @@ function generarFiltrosCategorias() {
 /*  --- FUNCIÓN: generarFiltrosCategorias()--- termina --- */
 
 /*  ---FUNCIÓN: mostrarBannerOferta()--- empieza --- */
-
 function mostrarBannerOferta(categoria) {
   const viejo = document.querySelector("dialog.banner-dialog");
   if (viejo) {
@@ -298,7 +297,6 @@ function mostrarBannerOferta(categoria) {
   }
 
   let datosBanner = bannersPorCategoria[categoria];
-
   const rutaBanner = RUTA_IMG_BANNERS + datosBanner[0].imagen;
 
   const dlg = document.createElement("dialog");
@@ -306,21 +304,30 @@ function mostrarBannerOferta(categoria) {
 
   const img = document.createElement("img");
   img.src = rutaBanner;
-  img.alt = "Oferta especial";
+  img.alt = "Oferta especial para " + categoria;
   img.classList.add("banner-dialog-img");
+
+  const btnVer = document.createElement("button");
+  btnVer.type = "button";
+  btnVer.classList.add("btn-primario", "banner-btn");
+  btnVer.textContent = `Ver ${categoria}`;
+  btnVer.addEventListener("click", () => {
+    const filtrados = productos.filter(p => p.categoria === categoria);
+    MostrarCatalogo(filtrados);
+    dlg.close();
+  });
 
   const btnCerrar = document.createElement("button");
   btnCerrar.type = "button";
   btnCerrar.classList.add("banner-close");
   btnCerrar.innerHTML = "&times;";
 
-  dlg.append(img, btnCerrar);
+  dlg.append(img, btnVer, btnCerrar); 
   document.body.append(dlg);
   dlg.showModal();
 
   function cerrarConFade() {
     dlg.classList.add("fade-out");
-
     setTimeout(() => {
       if (dlg.open) dlg.close();
       dlg.remove();
@@ -336,6 +343,8 @@ function mostrarBannerOferta(categoria) {
 
   dlg.addEventListener("close", () => dlg.remove());
 }
+
+
 /*  ---FUNCIÓN: mostrarBannerOferta()--- termina --- */
 
 /* ---  FUNCIÓN: abrirModalDetalle() --- empieza ---*/
@@ -731,6 +740,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
