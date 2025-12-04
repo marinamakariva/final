@@ -378,9 +378,12 @@ function mostrarBannerOferta(categoria) {
 function mostrarAvisoCarrito(mensaje) {
   const host = document.querySelector("dialog[open]") || document.body;
 
-  cont = document.createElement("div");
-  cont.id = "avisos";
-  host.appendChild(cont);
+  let cont = host.querySelector("#avisos");
+  if (!cont) {
+    cont = document.createElement("div");
+    cont.id = "avisos";
+    host.appendChild(cont);
+  }
 
   const aviso = document.createElement("div");
   aviso.className = "aviso";
@@ -406,6 +409,7 @@ function mostrarAvisoCarrito(mensaje) {
     );
   }, 2500);
 }
+
 
 /* ---  FUNCIÓN: mostrarAvisoCarrito() --- termina ---*/
 
