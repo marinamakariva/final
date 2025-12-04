@@ -207,6 +207,8 @@ class CarritoDeCompras {
 }
 
 const carrito = new CarritoDeCompras();
+carrito.cargar();
+actualizarMiniCarrito();
 /*---  Carrito de compras--- termina ---*/
 
 /* --- FUNCIÓN: actualizarMiniCarrito() --- empieza ---*/
@@ -753,16 +755,17 @@ function manejarSubmitCheckout(evento) {
 
 /*--- Inicialización del DOM --- empieza ---*/
 document.addEventListener("DOMContentLoaded", () => {
+  carrito.cargar();
+  actualizarMiniCarrito();
   generarFiltrosCategorias();
   MostrarCatalogo();
-  actualizarMiniCarrito();
 
   const btnVerCarrito = document.querySelector("#mini-carrito button");
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
-
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
