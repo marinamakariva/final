@@ -568,6 +568,8 @@ button:focus {
   flex-direction: column;
   gap: 1.2rem;
   padding-top: 0.5rem;
+  overflow-y: auto; 
+  max-height: calc(80dvh - 100px); 
 }
 
 .detalle-info .producto-nombre {
@@ -602,6 +604,87 @@ button:focus {
   margin-bottom: 0.8rem;
 }
 /* --- Estilos de ModalDetalle --- terminan --- */
+
+/* --- Estilos de ModalCarrito ---empiezan --- */
+
+.carrito-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.carrito-item:last-child {
+  border-bottom: none;
+}
+
+.carrito-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.carrito-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.carrito-item-nombre {
+  font-weight: 600;
+  color: #025e73;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.carrito-item-cantidad,
+.carrito-item-subtotal {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.carrito-item-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.carrito-item-actions button {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  min-width: auto;
+}
+.carrito-total {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #025e73;
+  text-align: right;
+  margin: 1rem 0 1.5rem;
+}
+
+.acciones-carrito {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.acciones-carrito button {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* --- Estilos de ModalCarrito --- terminan --- */
 
 /* --- Media Queries --- empiezan --- */
 @media (min-width: 576px) {
@@ -713,3 +796,4 @@ dialog #avisos {
 }
 
 /* --- Estilos de AvisoCarrito --- terminan --- */
+
