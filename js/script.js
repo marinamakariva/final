@@ -33,7 +33,7 @@ const productosData = [
       "producto-SerpentiViperAnillo02.webp",
       "producto-SerpentiViperAnillo03.webp"
     ],
-    categoria: "anillos",
+    categoria: "ANILLOS",
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const productosData = [
       "producto-B.zero1Collar02.webp",
       "producto-B.zero1Collar03.webp"
     ],
-    categoria: "collares",
+    categoria: "COLLARES",
   },
   {
     id: 3,
@@ -59,7 +59,7 @@ const productosData = [
       "producto-SerpentiViperPendientes02.webp",
       "producto-SerpentiViperPendientes03.webp"
     ],
-    categoria: "aros",
+    categoria: "AROS",
   },
   {
     id: 4,
@@ -72,7 +72,7 @@ const productosData = [
       "producto-SerpentiViperPulsera02.webp",
       "producto-SerpentiViperPulsera03.webp"
     ],
-    categoria: "pulseras",
+    categoria: "PULSERAS",
   },
   {
     id: 5,
@@ -85,7 +85,7 @@ const productosData = [
       "producto-RelojMonete02.webp",
       "producto-RelojMonete03.webp"
     ],
-    categoria: "relojes",
+    categoria: "RELOJES",
   },
   {
     id: 6,
@@ -98,7 +98,7 @@ const productosData = [
       "producto-DivasDreamAnillo02.webp",
       "producto-DivasDreamAnillo03.webp"
     ],
-    categoria: "anillos",
+    categoria: "ANILLOS",
   },
 ];
 
@@ -109,11 +109,11 @@ const productos = productosData.map(p => new Producto(p));
 
 /*--- Banners por categoría ---empieza ---*/
 const bannersPorCategoria = {
-  anillos: [{ imagen: "banner-anillos.webp" }],
-  collares: [{ imagen: "banner-collares.webp" }],
-  aros: [{ imagen: "banner-aros.webp" }],
-  pulseras: [{ imagen: "banner-pulseras.webp" }],
-  relojes: [{ imagen: "banner-relojes.webp" }],
+  ANILLOS: [{ imagen: "banner-anillos.webp" }],
+  COLLARES: [{ imagen: "banner-collares.webp" }],
+  AROS: [{ imagen: "banner-aros.webp" }],
+  PULSERAS: [{ imagen: "banner-pulseras.webp" }],
+  RELOJES: [{ imagen: "banner-relojes.webp" }],
 };
 /*--- Banners por categoría --- termina ---*/
 
@@ -267,7 +267,7 @@ function generarFiltrosCategorias() {
   const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
 
   const btnTodos = document.createElement("button");
-  btnTodos.textContent = "todos";
+  btnTodos.textContent = "TODOS";
   btnTodos.classList.add("btn-secundario");
   btnTodos.addEventListener("click", () => MostrarCatalogo(productos));
   cont.append(btnTodos);
@@ -732,6 +732,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
