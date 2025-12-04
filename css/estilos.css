@@ -16,7 +16,7 @@ body {
 
 body {
   font-family: "Lora", serif;
-  background-color: #f6f5f2;
+  background-color: #eeeeee;
   color: #3c3c3c;
   line-height: 1.5;
 }
@@ -47,10 +47,6 @@ img {
   color: #011f26;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-}
-
-.web > main {
-  background: #f6f5f2;
 }
 
 .web > footer {
@@ -368,90 +364,7 @@ button:focus {
 .banner-dialog {
   border: none;
   padding: 0;
-  background: #ffffff;
-  width: 80vw;
-  max-width: 900px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999999;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow:
-    0 0 40px rgba(0, 0, 0, 0.35),
-    0 0 18px rgba(2, 94, 115, 0.35);
-  animation: bannerZoom 0.4s ease-out;
-}
-
-.banner-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-}
-
-.banner-dialog-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-.banner-close {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  z-index: 2;
-  border: none;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 999px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  line-height: 1;
-  cursor: pointer;
-  color: #025e73;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.banner-close:hover {
-  transform: scale(1.08);
-  background: #ffffff;
-}
-
-@keyframes bannerZoom {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.85);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.banner-dialog.fade-out {
-  animation: bannerFadeOut 0.4s forwards ease-out;
-}
-
-@keyframes bannerFadeOut {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-}
-
-.banner-dialog {
-  border: none;
-  padding: 0;
-  background: #f6f5f2; 
+  background: #eeeeee; 
   width: 80vw;
   max-width: 900px;
   position: fixed;
@@ -466,7 +379,7 @@ button:focus {
 }
 
 .banner-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.4); 
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(1px);
 }
 
@@ -476,26 +389,11 @@ button:focus {
   display: block;
 }
 
-.banner-btn {
-  margin: 24px auto 16px;
-  padding: 0.6rem 1.4rem;
-  font-size: 1.05rem;
-  font-weight: 600;
-  border-radius: 8px;
-  background: #025e73;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  transition: filter 0.2s ease, transform 0.15s ease;
+.banner-dialog .btn-primario {
   display: block;
+  margin: 24px auto 16px; 
   max-width: 320px;
   width: 90%;
-}
-
-.banner-btn:hover {
-  background: #347e8f;
-  transform: translateY(-2px);
-  filter: brightness(1.05);
 }
 
 .banner-close {
@@ -523,6 +421,7 @@ button:focus {
   transform: scale(1.08);
 }
 
+
 @keyframes bannerZoom {
   from {
     opacity: 0;
@@ -548,7 +447,6 @@ button:focus {
     transform: translate(-50%, -50%) scale(0.92);
   }
 }
-
  
 /* --- Estilos de Banners --- terminan --- */
 
@@ -752,4 +650,5 @@ button:focus {
   }
 }
 /* --- Media Queries terminan --- */
+
 
