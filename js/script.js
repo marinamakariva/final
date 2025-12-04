@@ -302,10 +302,11 @@ function mostrarBannerOferta(categoria) {
     viejo.remove();
   }
 
+  const productoOferta = productos.find(p => p.categoria === categoria && p.enOferta);
+  if (!productoOferta) return;
+
   const datosBanner = bannersPorCategoria[categoria];
   if (!datosBanner || !datosBanner[0]) return;
-
-  const productoOferta = productos.find(p => p.categoria === categoria && p.enOferta);
 
   const rutaBanner = RUTA_IMG_BANNERS + datosBanner[0].imagen;
 
@@ -314,26 +315,16 @@ function mostrarBannerOferta(categoria) {
 
   const img = document.createElement("img");
   img.src = rutaBanner;
-  img.alt = `Oferta especial en ${categoria}`;
+  img.alt = `Oferta en ${productoOferta.nombre}`;
   img.classList.add("banner-dialog-img");
 
   const btnVer = document.createElement("button");
   btnVer.classList.add("btn-primario");
-  
-  if (productoOferta) {
-    btnVer.textContent = `Ver oferta: ${productoOferta.nombre}`;
-    btnVer.addEventListener("click", () => {
-      abrirModalDetalle(productoOferta); 
-      dlg.close();
-    });
-  } else {
-
-    btnVer.textContent = `Ver colección de ${categoria}`;
-    btnVer.addEventListener("click", () => {
-      MostrarCatalogo(productos.filter(p => p.categoria === categoria));
-      dlg.close();
-    });
-  }
+  btnVer.textContent = `Ver oferta: ${productoOferta.nombre}`;
+  btnVer.addEventListener("click", () => {
+    abrirModalDetalle(productoOferta);
+    dlg.close();
+  });
 
   const btnCerrar = document.createElement("button");
   btnCerrar.type = "button";
@@ -757,6 +748,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
