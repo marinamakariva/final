@@ -447,6 +447,109 @@ button:focus {
     transform: translate(-50%, -50%) scale(0.9);
   }
 }
+
+.banner-dialog {
+  border: none;
+  padding: 0;
+  background: #f6f5f2; 
+  width: 80vw;
+  max-width: 900px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999999;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  animation: bannerZoom 0.4s ease-out;
+}
+
+.banner-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(1px);
+}
+
+.banner-dialog-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.banner-btn {
+  margin: 24px auto 16px;
+  padding: 0.6rem 1.4rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background: #025e73;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.15s ease;
+  display: block;
+  max-width: 320px;
+  width: 90%;
+}
+
+.banner-btn:hover {
+  background: #347e8f;
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.banner-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #025e73;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.banner-close:hover {
+  background: white;
+  transform: scale(1.08);
+}
+
+@keyframes bannerZoom {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.banner-dialog.fade-out {
+  animation: bannerFadeOut 0.35s forwards ease-out;
+}
+
+@keyframes bannerFadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+}
+
+ 
 /* --- Estilos de Banners --- terminan --- */
 
 /* --- Estilos de Modal --- empiezan --- */
@@ -649,3 +752,4 @@ button:focus {
   }
 }
 /* --- Media Queries terminan --- */
+
