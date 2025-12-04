@@ -105,7 +105,22 @@ const productosData = [
       "producto-DivasDreamAnillo03.webp"
     ],
     categoria: "ANILLOS",
+    enOferta: false
   },
+    {
+  id: 7,
+  nombre: "Bvlgari Bvlgari Pendiente Individual",
+  descripcion: "Pendiente individual en oro blanco con ónix",
+  descripcionLarga: "Pendiente individual Bvlgari Bvlgari en oro blanco de 18 qt con elemento de ónix engastado (Este pendiente se vende por unidad).",
+  precio: 420000, 
+  imagenes: [
+    "producto-BvlgariBvlgariPendienteIndividual.webp",
+    "producto-BvlgariBvlgariPendienteIndividual02.webp",
+    "producto-BvlgariBvlgariPendienteIndividual03.webp"
+  ],
+  categoria: "AROS",
+  enOferta: false
+}
 ];
 
 const productos = productosData.map(p => new Producto(p));
@@ -192,6 +207,8 @@ class CarritoDeCompras {
 }
 
 const carrito = new CarritoDeCompras();
+carrito.cargar();
+actualizarMiniCarrito();
 /*---  Carrito de compras--- termina ---*/
 
 /* --- FUNCIÓN: actualizarMiniCarrito() --- empieza ---*/
@@ -604,7 +621,7 @@ function abrirModalCarrito() {
   contenedor.append(contenido);
   modal.append(closeBtn, contenedor);
 
-  document.body.prepend(modal);
+  document.body.append(modal);
   modal.showModal();
 
   modal.addEventListener("close", () => modal.remove());
@@ -765,7 +782,7 @@ function manejarSubmitCheckout(evento) {
   btnCerrar.addEventListener("click", () => mensaje.close());
 
   mensaje.append(texto, btnCerrar);
-  document.body.prepend(mensaje);
+  document.body.append(mensaje);
   mensaje.showModal();
 
   mensaje.addEventListener("close", () => mensaje.remove());
@@ -776,13 +793,13 @@ function manejarSubmitCheckout(evento) {
 
 /*--- Inicialización del DOM --- empieza ---*/
 document.addEventListener("DOMContentLoaded", () => {
+  carrito.cargar();
+  actualizarMiniCarrito();
   generarFiltrosCategorias();
   MostrarCatalogo();
-  actualizarMiniCarrito();
 
   const btnVerCarrito = document.querySelector("#mini-carrito button");
   btnVerCarrito.addEventListener("click", abrirModalCarrito);
-
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
