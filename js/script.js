@@ -415,7 +415,6 @@ function abrirModalDetalle(producto) {
   btnAgregar.addEventListener("click", () => {
     carrito.agregar(producto);
     actualizarMiniCarrito();
-    modal.close();
   });
 
   info.append(titulo, descripcion, precio, categoria, btnAgregar);
