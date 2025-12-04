@@ -310,7 +310,7 @@ function mostrarBannerOferta(categoria) {
   const btnVer = document.createElement("button");
   btnVer.type = "button";
   btnVer.classList.add("btn-primario", "banner-btn");
-  btnVer.textContent = `Ver ${categoria}`;
+  btnVer.textContent = `VER ${categoria}`;
   btnVer.addEventListener("click", () => {
     const filtrados = productos.filter(p => p.categoria === categoria);
     MostrarCatalogo(filtrados);
@@ -740,6 +740,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
+
 
 
 
