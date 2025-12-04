@@ -651,4 +651,65 @@ button:focus {
 }
 /* --- Media Queries terminan --- */
 
+/* --- Estilos de AvisoCarrito --- empiezan --- */
 
+body > #avisos {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+dialog #avisos {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 5;  
+  pointer-events: none;
+}
+
+.aviso {
+  pointer-events: auto;
+  min-width: 220px;
+  max-width: 320px;
+
+  background: #025e73;
+  color: #fff;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(255, 255, 255, 0.3);
+
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.aviso.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.aviso-cerrar {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 0.3rem;
+}
+
+/* --- Estilos de AvisoCarrito --- terminan --- */

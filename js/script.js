@@ -15,7 +15,7 @@ class Producto {
     this.precio = precio;
     this.imagenes = imagenes;
     this.categoria = categoria;
-    this.enOferta = enOferta; 
+    this.enOferta = enOferta;
   }
 }
 /* --- Clase producto ---termina---*/
@@ -252,6 +252,7 @@ function MostrarCatalogo(productosRecorrer = productos) {
     btnAgregar.addEventListener("click", () => {
       carrito.agregar(producto);
       actualizarMiniCarrito();
+      mostrarAvisoCarrito("Producto agregado al carrito");
     });
 
     footer.append(btnDetalle, btnAgregar);
@@ -264,7 +265,7 @@ function MostrarCatalogo(productosRecorrer = productos) {
 }
 /* --- FUNCIÓN: MostrarCatalogo() --- termina ---*/
 
-/*  --- FUNCIÓN: generarFiltrosCategorias()--- empieza --- */
+/*  --- FUNCIÓN: generarFiltrosCategorias() --- empieza --- */
 
 function generarFiltrosCategorias() {
   const cont = document.getElementById("categorias");
@@ -286,7 +287,7 @@ function generarFiltrosCategorias() {
     btn.addEventListener("click", () => {
       const filtrados = productos.filter(p => p.categoria === cat);
       MostrarCatalogo(filtrados);
-      mostrarBannerOferta(cat); 
+      mostrarBannerOferta(cat);
     });
 
     cont.append(btn);
@@ -353,7 +354,43 @@ function mostrarBannerOferta(categoria) {
   dlg.addEventListener("close", () => dlg.remove());
 }
 
-/*  ---FUNCIÓN: mostrarBannerOferta()--- termina --- */
+/*  ---FUNCIÓN: mostrarBannerOferta() --- termina --- */
+
+/* ---  FUNCIÓN: mostrarAvisoCarrito() --- empieza ---*/
+
+function mostrarAvisoCarrito(mensaje) {
+  const host = document.querySelector("dialog[open]") || document.body;
+
+  cont = document.createElement("div");
+  cont.id = "avisos";
+  host.appendChild(cont);
+
+  const aviso = document.createElement("div");
+  aviso.className = "aviso";
+  aviso.textContent = mensaje;
+
+  const btnCerrar = document.createElement("button");
+  btnCerrar.type = "button";
+  btnCerrar.className = "aviso-cerrar";
+  btnCerrar.textContent = "×";
+  btnCerrar.addEventListener("click", () => aviso.remove());
+
+  aviso.appendChild(btnCerrar);
+  cont.appendChild(aviso);
+
+  requestAnimationFrame(() => aviso.classList.add("show"));
+
+  setTimeout(() => {
+    aviso.classList.remove("show");
+    aviso.addEventListener(
+      "transitionend",
+      () => aviso.remove(),
+      { once: true }
+    );
+  }, 2500);
+}
+
+/* ---  FUNCIÓN: mostrarAvisoCarrito() --- termina ---*/
 
 /* ---  FUNCIÓN: abrirModalDetalle() --- empieza ---*/
 
@@ -432,6 +469,7 @@ function abrirModalDetalle(producto) {
   btnAgregar.addEventListener("click", () => {
     carrito.agregar(producto);
     actualizarMiniCarrito();
+    mostrarAvisoCarrito("Producto agregado al carrito");
   });
 
   info.append(titulo, descripcion, precio, categoria, btnAgregar);
@@ -458,8 +496,8 @@ function abrirModalCarrito() {
   closeBtn.addEventListener("click", () => modal.close());
 
   const contenedor = document.createElement("div");
-  contenedor.classList.add("detalle-layout"); 
-  
+  contenedor.classList.add("detalle-layout");
+
   const contenido = document.createElement("div");
   contenido.classList.add("detalle-info");
 
@@ -469,12 +507,12 @@ function abrirModalCarrito() {
   contenido.append(titulo);
 
   if (carrito.items.length === 0) {
-    
+
     const mensajeVacio = document.createElement("p");
     mensajeVacio.textContent = "Tu carrito está vacío. Agregá productos para comenzar tu compra.";
     contenido.append(mensajeVacio);
   } else {
-    
+
     const lista = document.createElement("ul");
 
     carrito.items.forEach(item => {
@@ -489,7 +527,7 @@ function abrirModalCarrito() {
       const subtotal = document.createElement("p");
       subtotal.textContent = `Subtotal: $${item.producto.precio * item.cantidad}`;
 
-     
+
       const accionesItem = document.createElement("div");
 
       const btnRestar = document.createElement("button");
@@ -529,13 +567,13 @@ function abrirModalCarrito() {
 
     contenido.append(lista);
 
-   
+
     const total = document.createElement("p");
     total.classList.add("carrito-total");
     total.textContent = `Total: $${carrito.total()}`;
     contenido.append(total);
 
-  
+
     const accionesCarrito = document.createElement("div");
     accionesCarrito.classList.add("acciones-carrito");
 
@@ -558,7 +596,7 @@ function abrirModalCarrito() {
       abrirModalCheckout();
     });
 
-   
+
     accionesCarrito.append(btnVaciar, btnCheckout);
     contenido.append(accionesCarrito);
   }
@@ -576,12 +614,12 @@ function abrirModalCarrito() {
 
 /* ---  FUNCIÓN: abrirModalCheckout() --- empieza ---*/
 function abrirModalCheckout() {
-  
+
   const modal = document.createElement("dialog");
   modal.id = "modal-checkout";
   modal.classList.add("modal");
 
-  
+
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.classList.add("modal-close");
@@ -589,21 +627,21 @@ function abrirModalCheckout() {
   closeBtn.innerHTML = "&times;";
   closeBtn.addEventListener("click", () => modal.close());
 
-  
+
   const contenido = document.createElement("div");
   contenido.id = "modal-detalle-contenido";
 
-  
+
   const form = document.createElement("form");
   form.id = "form-checkout";
   form.addEventListener("submit", manejarSubmitCheckout);
 
-  
+
   const titulo = document.createElement("h2");
   titulo.textContent = "Finalizar compra";
   form.append(titulo);
 
-  
+
   const campos = [
     { id: "chk-nombre", label: "Nombre:", type: "text", required: true },
     { id: "chk-telefono", label: "Teléfono:", type: "tel", required: true },
@@ -625,7 +663,7 @@ function abrirModalCheckout() {
     form.append(label, input);
   });
 
-  
+
   const labelMetodo = document.createElement("label");
   labelMetodo.setAttribute("for", "chk-metodo");
   labelMetodo.textContent = "Método de pago:";
@@ -650,7 +688,7 @@ function abrirModalCheckout() {
 
   form.append(labelMetodo, selectMetodo);
 
- 
+
   const labelCuotas = document.createElement("label");
   labelCuotas.setAttribute("for", "chk-cuotas");
   labelCuotas.textContent = "Cuotas:";
@@ -668,7 +706,7 @@ function abrirModalCheckout() {
 
   form.append(labelCuotas, selectCuotas);
 
- 
+
   const acciones = document.createElement("div");
   acciones.classList.add("modal-carrito-actions");
 
@@ -690,7 +728,7 @@ function abrirModalCheckout() {
   document.body.append(modal);
   modal.showModal();
 
-  
+
   modal.addEventListener("close", () => modal.remove());
 }
 
@@ -748,13 +786,3 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*--- Inicialización del DOM  --- termina ---*/
-
-
-
-
-
-
-
-
-
-
