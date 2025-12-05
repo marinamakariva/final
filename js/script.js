@@ -288,7 +288,9 @@ function MostrarCatalogo(productosRecorrer = productos) {
 
 function generarFiltrosCategorias() {
   const cont = document.getElementById("categorias");
-  cont.innerHTML = "";
+  while (cont.firstChild) {
+    cont.firstChild.remove();
+  }
 
   const categoriasUnicas = [...new Set(productos.map(p => p.categoria))];
 
@@ -424,7 +426,7 @@ function abrirModalDetalle(producto) {
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.classList.add("modal-close");
-  closeBtn.innerHTML = "&times;";
+   closeBtn.textContent = "×";
   closeBtn.addEventListener("click", () => modal.close());
 
   const contenido = document.createElement("div");
@@ -830,5 +832,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /*--- Inicialización del DOM  --- termina --- */
+
 
 
