@@ -657,13 +657,11 @@ function abrirModalCarrito() {
 
 /* ---  FUNCIÓN: abrirModalCarrito() --- termina --- */
 
-/* ---  FUNCIÓN: abrirModalCheckout() --- empieza --- */
+/* --- FUNCIÓN: abrirModalCheckout() --- empieza --- */
 function abrirModalCheckout() {
-
   const modal = document.createElement("dialog");
   modal.id = "modal-checkout";
   modal.classList.add("modal");
-
 
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
@@ -672,20 +670,16 @@ function abrirModalCheckout() {
   closeBtn.textContent = "×";
   closeBtn.addEventListener("click", () => modal.close());
 
-
   const contenido = document.createElement("div");
   contenido.id = "modal-detalle-contenido";
-
 
   const form = document.createElement("form");
   form.id = "form-checkout";
   form.addEventListener("submit", manejarSubmitCheckout);
 
-
   const titulo = document.createElement("h2");
   titulo.textContent = "Finalizar compra";
   form.append(titulo);
-
 
   const campos = [
     { id: "chk-nombre", label: "Nombre:", type: "text", required: true },
@@ -696,6 +690,9 @@ function abrirModalCheckout() {
   ];
 
   campos.forEach(campo => {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("form-control");
+
     const label = document.createElement("label");
     label.setAttribute("for", campo.id);
     label.textContent = campo.label;
@@ -704,10 +701,44 @@ function abrirModalCheckout() {
     input.id = campo.id;
     input.type = campo.type;
     if (campo.required) input.required = true;
+    input.setAttribute("aria-describedby", `${campo.id}-error`);
 
-    form.append(label, input);
+    const error = document.createElement("small");
+    error.id = `${campo.id}-error`;
+    error.classList.add("error");
+    error.setAttribute("role", "alert");
+    error.textContent = "";
+
+    const validarYActualizar = () => {
+      input.setCustomValidity("");
+      input.removeAttribute("aria-invalid");
+      error.textContent = "";
+      if (input.validity.valueMissing) {
+        input.setCustomValidity("Este campo es obligatorio.");
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = "Este campo es obligatorio.";
+      } else if (input.type === "email" && input.validity.typeMismatch) {
+        input.setCustomValidity("Por favor, ingresa un correo electrónico válido.");
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = "Por favor, ingresa un correo electrónico válido.";
+      }
+    };
+
+    input.addEventListener("blur", validarYActualizar);
+    input.addEventListener("input", () => {
+      if (input.validity.valid) {
+        input.setCustomValidity("");
+        input.removeAttribute("aria-invalid");
+        error.textContent = "";
+      }
+    });
+
+    wrapper.append(label, input, error);
+    form.append(wrapper);
   });
 
+  const wrapperMetodo = document.createElement("div");
+  wrapperMetodo.classList.add("form-control");
 
   const labelMetodo = document.createElement("label");
   labelMetodo.setAttribute("for", "chk-metodo");
@@ -716,12 +747,12 @@ function abrirModalCheckout() {
   const selectMetodo = document.createElement("select");
   selectMetodo.id = "chk-metodo";
   selectMetodo.required = true;
+  selectMetodo.setAttribute("aria-describedby", "chk-metodo-error");
 
   const opcionesMetodo = [
     { value: "", text: "Seleccionar..." },
     { value: "tarjeta", text: "Tarjeta de crédito" },
-    { value: "debito", text: "Tarjeta de débito" },
-    { value: "transferencia", text: "Transferencia" }
+    { value: "debito", text: "Tarjeta de débito" }
   ];
 
   opcionesMetodo.forEach(op => {
@@ -731,8 +762,19 @@ function abrirModalCheckout() {
     selectMetodo.append(opt);
   });
 
-  form.append(labelMetodo, selectMetodo);
+  const errorMetodo = document.createElement("small");
+  errorMetodo.id = "chk-metodo-error";
+  errorMetodo.classList.add("error");
+  errorMetodo.setAttribute("role", "alert");
+  errorMetodo.textContent = "";
 
+  wrapperMetodo.append(labelMetodo, selectMetodo, errorMetodo);
+  form.append(wrapperMetodo);
+
+  const wrapperCuotas = document.createElement("div");
+  wrapperCuotas.id = "wrapper-cuotas";
+  wrapperCuotas.classList.add("form-control");
+  wrapperCuotas.style.display = "none";
 
   const labelCuotas = document.createElement("label");
   labelCuotas.setAttribute("for", "chk-cuotas");
@@ -740,17 +782,93 @@ function abrirModalCheckout() {
 
   const selectCuotas = document.createElement("select");
   selectCuotas.id = "chk-cuotas";
+  selectCuotas.setAttribute("aria-describedby", "chk-cuotas-error");
 
-  const opcionesCuotas = ["1", "3", "6"];
-  opcionesCuotas.forEach(c => {
+  ["1", "3", "6"].forEach(c => {
     const opt = document.createElement("option");
     opt.value = c;
     opt.textContent = `${c} cuota${c !== "1" ? "s" : ""}`;
     selectCuotas.append(opt);
   });
 
-  form.append(labelCuotas, selectCuotas);
+  const errorCuotas = document.createElement("small");
+  errorCuotas.id = "chk-cuotas-error";
+  errorCuotas.classList.add("error");
+  errorCuotas.setAttribute("role", "alert");
+  errorCuotas.textContent = "";
 
+  wrapperCuotas.append(labelCuotas, selectCuotas, errorCuotas);
+  form.append(wrapperCuotas);
+
+  const wrapperTarjeta = document.createElement("div");
+  wrapperTarjeta.id = "wrapper-tarjeta";
+  wrapperTarjeta.classList.add("form-control");
+  wrapperTarjeta.style.display = "none";
+
+  const camposTarjeta = [
+    { id: "chk-tarjeta-num", label: "Número de tarjeta:", pattern: "\\d{16}", title: "16 dígitos sin espacios" },
+    { id: "chk-tarjeta-vto", label: "Vencimiento (MM/AA):", pattern: "(0[1-9]|1[0-2])/\\d{2}", title: "Ej: 12/28" },
+    { id: "chk-tarjeta-cvv", label: "CVV:", pattern: "\\d{3,4}", title: "3 o 4 dígitos" }
+  ];
+
+  camposTarjeta.forEach(campo => {
+    const label = document.createElement("label");
+    label.setAttribute("for", campo.id);
+    label.textContent = campo.label;
+
+    const input = document.createElement("input");
+    input.id = campo.id;
+    input.type = "text";
+    input.required = true;
+    input.pattern = campo.pattern;
+    input.title = campo.title;
+    input.setAttribute("aria-describedby", `${campo.id}-error`);
+
+    const error = document.createElement("small");
+    error.id = `${campo.id}-error`;
+    error.classList.add("error");
+    error.setAttribute("role", "alert");
+    error.textContent = "";
+
+    const validarTarjeta = () => {
+      input.setCustomValidity("");
+      input.removeAttribute("aria-invalid");
+      error.textContent = "";
+      if (input.validity.valueMissing) {
+        input.setCustomValidity("Este campo es obligatorio.");
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = "Este campo es obligatorio.";
+      } else if (input.validity.patternMismatch) {
+        input.setCustomValidity("Formato inválido.");
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = "Formato inválido.";
+      }
+    };
+
+    input.addEventListener("blur", validarTarjeta);
+    input.addEventListener("input", () => {
+      if (input.validity.valid) {
+        input.setCustomValidity("");
+        input.removeAttribute("aria-invalid");
+        error.textContent = "";
+      }
+    });
+
+    wrapperTarjeta.append(label, input, error);
+  });
+
+  form.append(wrapperTarjeta);
+
+  selectMetodo.addEventListener("change", () => {
+    const esCredito = selectMetodo.value === "tarjeta";
+    const esDebito = selectMetodo.value === "debito";
+
+    wrapperCuotas.style.display = esCredito ? "block" : "none";
+    wrapperTarjeta.style.display = (esCredito || esDebito) ? "block" : "none";
+    selectCuotas.required = esCredito;
+
+    if (!esCredito) selectCuotas.value = "";
+  });
 
   const acciones = document.createElement("div");
   acciones.classList.add("modal-carrito-actions");
@@ -773,16 +891,62 @@ function abrirModalCheckout() {
   document.body.append(modal);
   modal.showModal();
 
-
   modal.addEventListener("close", () => modal.remove());
 }
+/* --- FUNCIÓN: abrirModalCheckout() --- termina --- */
 
-/* ---  FUNCIÓN: abrirModalCheckout() --- termina ---*/
 
-/*--- FUNCIÓN: manejarSubmitCheckout() --- empieza ---*/
-
+/* --- FUNCIÓN: manejarSubmitCheckout() --- empieza --- */
 function manejarSubmitCheckout(evento) {
   evento.preventDefault();
+
+  const form = evento.target;
+  let formularioInvalido = false;
+
+  const inputs = form.querySelectorAll("input[required], select[required]");
+  inputs.forEach(input => {
+    if (input.offsetParent === null) return;
+
+    input.setCustomValidity("");
+    input.removeAttribute("aria-invalid");
+    const errorEl = document.getElementById(`${input.id}-error`);
+    if (errorEl) errorEl.textContent = "";
+
+    let mensajeError = "";
+
+    if (input.validity.valueMissing) {
+      mensajeError = "Este campo es obligatorio.";
+    } else if (input.type === "email" && input.validity.typeMismatch) {
+      mensajeError = "Por favor, ingresa un correo electrónico válido.";
+    } else if (input.pattern && input.validity.patternMismatch) {
+      mensajeError = "Formato inválido.";
+    } else if (input.type === "date" && !input.value) {
+      
+      mensajeError = "Debes seleccionar una fecha de entrega.";
+    }
+
+    if (mensajeError) {
+      input.setCustomValidity(mensajeError);
+      input.setAttribute("aria-invalid", "true");
+      if (errorEl) errorEl.textContent = mensajeError;
+      formularioInvalido = true;
+    }
+  });
+
+  const selectMetodo = document.getElementById("chk-metodo");
+  const errorMetodo = document.getElementById("chk-metodo-error");
+  if (selectMetodo && !selectMetodo.value) {
+    selectMetodo.setCustomValidity("Debes seleccionar un método de pago.");
+    selectMetodo.setAttribute("aria-invalid", "true");
+    if (errorMetodo) errorMetodo.textContent = "Debes seleccionar un método de pago.";
+    formularioInvalido = true;
+  } else if (selectMetodo && errorMetodo) {
+    selectMetodo.setCustomValidity("");
+    selectMetodo.removeAttribute("aria-invalid");
+    errorMetodo.textContent = "";
+  }
+
+  if (formularioInvalido) return;
 
   const nombreInput = document.getElementById("chk-nombre");
   const nombreValor = nombreInput ? nombreInput.value.trim() : "";
@@ -790,16 +954,14 @@ function manejarSubmitCheckout(evento) {
   carrito.vaciar();
   actualizarMiniCarrito();
 
-  const dlg = document.getElementById("modal-checkout");
-  if (dlg instanceof HTMLDialogElement) {
-    dlg.close();
-  }
+  const modalActual = document.getElementById("modal-checkout");
+  if (modalActual) modalActual.close();
 
-  const mensaje = document.createElement("dialog");
-  mensaje.classList.add("modal", "modal-gracias");
+  const modalGracias = document.createElement("dialog");
+  modalGracias.classList.add("modal", "modal-gracias");
 
-  const texto = document.createElement("p");
-  texto.textContent = nombreValor
+  const parrafo = document.createElement("p");
+  parrafo.textContent = nombreValor
     ? `¡Gracias por tu compra, ${nombreValor}!`
     : "¡Gracias por tu compra!";
 
@@ -807,17 +969,15 @@ function manejarSubmitCheckout(evento) {
   btnCerrar.type = "button";
   btnCerrar.classList.add("btn-primario");
   btnCerrar.textContent = "Cerrar";
-  btnCerrar.addEventListener("click", () => mensaje.close());
+  btnCerrar.addEventListener("click", () => modalGracias.close());
 
-  mensaje.append(texto, btnCerrar);
-  document.body.append(mensaje);
-  mensaje.showModal();
+  modalGracias.append(parrafo, btnCerrar);
+  document.body.append(modalGracias);
+  modalGracias.showModal();
 
-  mensaje.addEventListener("close", () => mensaje.remove());
+  modalGracias.addEventListener("close", () => modalGracias.remove());
 }
-
 /* --- FUNCIÓN: manejarSubmitCheckout() --- termina --- */
-
 
 /* --- Inicialización del DOM --- empieza ---*/
 document.addEventListener("DOMContentLoaded", () => {
@@ -832,6 +992,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /*--- Inicialización del DOM  --- termina --- */
+
 
 
 
