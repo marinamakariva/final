@@ -792,7 +792,7 @@ function manejarSubmitCheckout(evento) {
   }
 
   const mensaje = document.createElement("dialog");
-  mensaje.classList.add("modal");
+  mensaje.classList.add("modal", "modal-gracias");
 
   const texto = document.createElement("p");
   texto.textContent = nombreValor
