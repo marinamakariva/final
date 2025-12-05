@@ -227,7 +227,9 @@ function actualizarMiniCarrito() {
 
 function MostrarCatalogo(productosRecorrer = productos) {
   const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = "";
+  while (contenedor.firstChild) {
+    contenedor.firstChild.remove();
+  }
 
   productosRecorrer.forEach(producto => {
     const li = document.createElement("li");
@@ -828,4 +830,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /*--- Inicialización del DOM  --- termina --- */
+
 
