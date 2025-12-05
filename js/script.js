@@ -351,7 +351,7 @@ function mostrarBannerOferta(categoria) {
   const btnCerrar = document.createElement("button");
   btnCerrar.type = "button";
   btnCerrar.classList.add("banner-close");
-  btnCerrar.innerHTML = "&times;";
+  btnCerrar.textContent = "×";
 
   dlg.append(img, btnVer, btnCerrar);
   document.body.append(dlg);
@@ -518,7 +518,7 @@ function abrirModalCarrito() {
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.classList.add("modal-close");
-  closeBtn.innerHTML = "&times;";
+  closeBtn.textContent = "×";
   closeBtn.addEventListener("click", () => modal.close());
 
   const contenedor = document.createElement("div");
@@ -669,7 +669,7 @@ function abrirModalCheckout() {
   closeBtn.type = "button";
   closeBtn.classList.add("modal-close");
   closeBtn.setAttribute("aria-label", "Cerrar");
-  closeBtn.innerHTML = "&times;";
+  closeBtn.textContent = "×";
   closeBtn.addEventListener("click", () => modal.close());
 
 
@@ -832,6 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /*--- Inicialización del DOM  --- termina --- */
+
 
 
 
