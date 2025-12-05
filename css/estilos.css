@@ -478,6 +478,10 @@ button:focus {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  overflow-y: auto;
+  max-height: 80dvh;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
 #modal-detalle-contenido h2 {
@@ -879,3 +883,4 @@ dialog #avisos {
 }
 
 /* --- Estilos del Checkout --- terminan --- */
+
